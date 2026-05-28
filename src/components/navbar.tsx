@@ -1,3 +1,4 @@
+import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -24,8 +25,18 @@ export default function Navbar() {
               </li>
             </ul>
           </nav>
+
+          {/* MOBILE BUTTON */}
+          <button
+           
+            className="md:hidden p-3"
+            aria-label="Toggle menu"
+          >
+            <Menu/>
+          </button>
         </div>
-      </div>
+        </div>
+      
     </header>
   );
 }
