@@ -3,10 +3,14 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { User } from "../types/user";
 
+type LoginResponse = 
+  | { success: true }
+  | { success: false; error: string };
+
 type AuthContextType = {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<LoginResponse>;
   getAccessToken: () => string | null;
 };
 
@@ -17,7 +21,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const accessTokenRef = useRef<string | null>(null);
 
-  async function login(email: string, password: string) {
+  async function login(email: string, password: string): Promise<LoginResponse> {
+  try {
     const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,13 +30,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       credentials: "include",
     });
 
-    if (!res.ok) throw new Error("Erro no login!");
+    if (!res.ok) {
+      return { success: false, error: "Invalid credentials" };
+    }
 
     const data = await res.json();
     accessTokenRef.current = data.token;
 
-    await loadUser(data.token);
+    try {
+      await loadUser(data.token);
+    } catch {
+      return { success: false, error: "Failed to load user" };
+    }
+
+    return { success: true };
+  } catch {
+    return { success: false, error: "Network error" };
   }
+}
 
   async function loadUser(token?: string) {
     const accessToken = token ?? accessTokenRef.current;
