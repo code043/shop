@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../components/navbar";
 import { AuthProvider } from "../context/auth";
 import { Providers } from "./providers";
+import Footer from "../components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           <main className="w-full max-w-5xl mx-auto px-4">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>
