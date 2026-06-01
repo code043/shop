@@ -1,7 +1,7 @@
-import { Product } from "@/src/types/product";
+import { ProductType } from "@/src/types/product";
 import Image from "next/image";
 import Link from "next/link";
-const products: Product[] = [];
+const products: ProductType[] = [];
 
 export default function Products() {
   return (
