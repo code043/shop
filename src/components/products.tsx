@@ -1,9 +1,10 @@
-import { ProductType } from "@/src/types/product";
+"use client"
 import Image from "next/image";
 import Link from "next/link";
-const products: ProductType[] = [];
+import { useGetProducts } from "../hooks/use-get-products";
 
 export default function Products() {
+  const { products, loading } = useGetProducts();
   return (
     <div className="mx-auto">
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
@@ -26,7 +27,7 @@ export default function Products() {
 
               <Link href={"/product/" + prod.slug}>
                 <p className="text-center w-full max-w-md px-3 py-4 text-[#526070] hover:text-white hover:underline break-words whitespace-normal">
-                  {prod.description}
+                  {prod.name}
                 </p>
               </Link>
             </li>
