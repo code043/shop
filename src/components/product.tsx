@@ -1,32 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { ProductType } from "../types/product";
-const product: ProductType = {
-  id: "1",
-  name: "Tshirt",
-  image: "http://",
-  description: "",
-  slug: "t-shirt",
-};
+import { useGetProductBySlug } from "../hooks/use-get-product-by-slug";
 
 export default function Product({ slug }: { slug: string }) {
+  const { product } = useGetProductBySlug(slug);
+  
+  if (!product) return;
   return (
-    <div className="text-white bg-black px-6 md:px-10 overflow-x-hidden">
+    <div className=" px-6 md:px-10 overflow-x-hidden">
       <div className="flex justify-center">
-        <div className="w-full max-w-4xl font-body ">
+        <div className="w-full max-w-3xl font-body ">
           {/* NAME */}
           <h1 className="text-xl md:text-5xl font-bold mt-10 mb-6">
             {product.name}
           </h1>
-          {/* HERO IMAGE */}
+          {/* IMAGE */}
           <div className="relative w-full aspect-video overflow-hidden rounded-md cursor-zoom-in">
             {product.image && (
               <Image
                 src={product.image}
                 alt="imagem"
-                width={900}
-                height={200}
+                width={800}
+                height={100}
                 className="w-full h-full object-cover "
               />
             )}
@@ -36,7 +32,7 @@ export default function Product({ slug }: { slug: string }) {
           <div className="mt-3 md:mt-10 mb-5">
             <h2
               className="text-sm md:text-3xl  
-	px-1 font-body break-words whitespace-normal text-gray-200"
+	px-1 font-body break-words whitespace-normal text-gray-500"
             >
               {product.description}
             </h2>
