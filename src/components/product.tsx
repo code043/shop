@@ -39,6 +39,7 @@ export default function Product({ slug }: { slug: string }) {
           </div>
         </div>
       </div>
+      button
     </div>
   );
 }
