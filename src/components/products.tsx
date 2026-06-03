@@ -6,14 +6,14 @@ import { useGetProducts } from "../hooks/use-get-products";
 export default function Products() {
   const { products, loading } = useGetProducts();
   return (
-    <div className="mx-auto">
+    <div className="mx-auto mt-30">
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
         {products.map((prod) => {
           return (
             <li key={prod.id} className="flex flex-col">
               <div className="overflow-hidden h-50 relative w-full">
                 {prod.image && (
-                  <Link href={"/products/" + prod.slug}>
+                  <Link href={"/product/" + prod.slug}>
                     <Image
                       src={prod.image}
                       width={300}
