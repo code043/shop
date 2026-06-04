@@ -1,8 +1,11 @@
+"use client"
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useGetCart } from "../hooks/use-get-cart";
 
 export default function Cart() {
+  const { cart } = useGetCart();
   return (
     <div className=" w-full px-1 md:px-4 md:max-w-6xl md:mx-auto flex flex-col md:flex-row gap-6 mt-30">
       {/* LIST */}
