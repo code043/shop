@@ -1,80 +1,62 @@
-"use client"
+"use client";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGetCart } from "../hooks/use-get-cart";
 
 export default function Cart() {
-  const { cart } = useGetCart();
+  const { cart, loading } = useGetCart();
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div className=" w-full px-1 md:px-4 md:max-w-6xl md:mx-auto flex flex-col md:flex-row gap-6 mt-30">
       {/* LIST */}
       <ul className="flex flex-col gap-6 w-full md:w-125">
-        <li className="flex gap-4 p-3 w-full rounded-lg shadow-sm items-stretch">
-          <div className="relative w-28 h-28 md:w-36 md:h-36 overflow-hidden rounded">
-            <Link href="/products">
-              <Image
-                src="/cover.jpeg"
-                alt="image"
-                fill
-                className="object-cover"
-              />
-            </Link>
-          </div>
-
-          <div className="flex flex-col justify-between flex-1">
-            <Link href="/product">
-              <p className="hover:underline">Name</p>
-            </Link>
-            <p>Description</p>
-            <span className="font-semibold">R$ 99,00</span>
-          </div>
-
-          <div className="flex items-end ml-auto">
-            <div className="flex justify-around items-center bg-gray-100 h-10 w-28 rounded-full">
-              <button>
-                <Minus />
-              </button>
-              <span>10</span>
-              <button>
-                <Plus />
-              </button>
+        {cart?.items?.map((item) => (
+          <li
+            key={item.id}
+            className="flex gap-4 p-3 w-full rounded-lg shadow-sm items-stretch"
+          >
+            <div className="relative w-28 h-28 md:w-36 md:h-36 overflow-hidden rounded">
+              <Link href={`/product/${item.product.slug}`}>
+                <Image
+                  src={item.product.image}
+                  alt={item.product.name}
+                  fill
+                  className="object-cover"
+                />
+              </Link>
             </div>
-          </div>
-        </li>
 
-        <li className="flex gap-4 p-3 w-full rounded-lg shadow-sm items-stretch">
-          <div className="relative w-28 h-28 md:w-36 md:h-36 overflow-hidden rounded">
-            <Link href="/products">
-              <Image
-                src="/cover.jpeg"
-                alt="image"
-                fill
-                className="object-cover"
-              />
-            </Link>
-          </div>
+            <div className="flex flex-col justify-between flex-1">
+              <Link href={`/product/${item.product?.slug}`}>
+                <p className="hover:underline">{item.product?.name}</p>
+              </Link>
 
-          <div className="flex flex-col justify-between flex-1">
-            <Link href="/product">
-              <p className="hover:underline">Name</p>
-            </Link>
-            <p>Description</p>
-            <span className="font-semibold">R$ 99,00</span>
-          </div>
+              <p className="text-gray-500 text-sm">
+                {item.product.description}
+              </p>
 
-          <div className="flex items-end ml-auto">
-            <div className="flex justify-around items-center bg-gray-100 h-10 w-28 rounded-full">
-              <button>
-                <Minus />
-              </button>
-              <span>10</span>
-              <button>
-                <Plus />
-              </button>
+              <span className="font-semibold">
+                ${(item.product.price / 100).toFixed(2)}
+              </span>
             </div>
-          </div>
-        </li>
+
+            <div className="flex items-end ml-auto">
+              <div className="flex justify-around items-center bg-gray-100 h-10 w-28 rounded-full">
+                <button>
+                  <Minus />
+                </button>
+
+                <span>{item.quantity}</span>
+
+                <button>
+                  <Plus />
+                </button>
+              </div>
+            </div>
+          </li>
+        ))}
       </ul>
 
       {/* CHECKOUT */}
