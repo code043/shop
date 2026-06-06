@@ -1,10 +1,17 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useGetProducts } from "../hooks/use-get-products";
 
 export default function Products() {
   const { products, loading } = useGetProducts();
+  if (loading) {
+    return (
+      <div className="mx-auto mt-30">
+        <p>Carregando..</p>
+      </div>
+    );
+  }
   return (
     <div className="mx-auto mt-30">
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">

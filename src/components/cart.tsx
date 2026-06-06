@@ -3,9 +3,30 @@ import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGetCart } from "../hooks/use-get-cart";
+import { useAuth } from "../context/auth";
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Cart() {
   const { cart, loading } = useGetCart();
+  const { getAccessToken } = useAuth();
+  
+  const handleCheckout = async () => {
+    const token = getAccessToken();
+    const res = await fetch(`${baseURL}/orders/checkout`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url; 
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -63,7 +84,10 @@ export default function Cart() {
       <div className="w-full md:w-1/3 h-fit bg-gray-100 p-4 rounded sticky top-10">
         <h1 className="text-lg font-semibold mb-4">Total:</h1>
 
-        <button className="w-full bg-red-500 py-2 text-white rounded hover:bg-red-600 transition">
+        <button
+          onClick={handleCheckout}
+          className="w-full bg-red-500 py-2 text-white rounded hover:bg-red-600 transition"
+        >
           Checkout
         </button>
       </div>
