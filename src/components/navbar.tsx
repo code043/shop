@@ -1,15 +1,12 @@
 "use client";
-import {
-  CircleUser,
-  Menu,
-  Search,
-  ShoppingCart,
-} from "lucide-react";
+import { CircleUser, Menu, Search, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "../context/auth";
+import { useCart } from "../context/cart-context";
 
 export default function Navbar() {
   const { user, loading } = useAuth();
+  const { cart } = useCart()
   return (
     <header className="w-full fixed bg-white flex justify-center text-red-500 z-50 shadow-sm">
       {/* MOBILE BUTTON */}
@@ -52,9 +49,21 @@ export default function Navbar() {
             </button>
           </li>
           <li>
-            <button>
-              <ShoppingCart />
-            </button>
+            <Link href={'/cart/'+cart?.id}>
+            <div className="relative">
+              <ShoppingCart size={28} />
+
+              {cart && cart?.items?.length > 0 && (
+                <span
+                  className="absolute -top-1 -right-1 flex items-center justify-center 
+                 min-w-[16px] h-4 px-1 text-[10px] font-bold 
+                 bg-green-600 text-white rounded-full"
+                >
+                  {cart.items.length}
+                </span>
+              )}
+              </div>
+            </Link>
           </li>
           {/* AUTH STATUS */}
           {loading ? (

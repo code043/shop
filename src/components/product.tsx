@@ -6,12 +6,15 @@ import { useGetProductBySlug } from "../hooks/use-get-product-by-slug";
 import { Minus, Plus, Star, StarHalfIcon } from "lucide-react";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/navigation";
+import { useCart } from "../context/cart-context";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Product({ slug }: { slug: string }) {
   const router = useRouter();
+  const [added, setAdded] = useState(false);
   const { getAccessToken, tryRefresh } = useAuth();
+  const { cart, reload } = useCart();
   const { product } = useGetProductBySlug(slug);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -65,15 +68,19 @@ export default function Product({ slug }: { slug: string }) {
         throw new Error(err.message);
       }
 
-      const data = await res.json();
-      router.push(`/cart/${data.cartId}`);
+      await reload();
+      setAdded(true);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   }
-
+  function goToCart(id: string | undefined) {
+    if (id) {
+      router.push(`/cart/${id}`);
+    }
+  }
   return (
     <div className="mt-30 px-6 md:px-10 overflow-x-hidden">
       <div className="flex justify-center">
@@ -128,14 +135,23 @@ export default function Product({ slug }: { slug: string }) {
                 <Plus />
               </button>
             </div>
+            {added ? (
+              <button
+                onClick={() => goToCart(cart?.id)}
+                className="flex justify-center items-center bg-red-500 h-10 w-50 rounded-full"
+              >
+                Go to cart
+              </button>
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                className="flex justify-center items-center bg-green-500 h-10 w-50 rounded-full"
+              >
+                Add to cart
+              </button>
+            )}
 
-            <button
-              onClick={handleAddToCart}
-              className="flex justify-center items-center bg-green-500 h-10 w-50 rounded-full"
-              disabled={loading}
-            >
-              {loading ? "Adding..." : "Add to cart"}
-            </button>
+           
           </div>
         </div>
       </div>
