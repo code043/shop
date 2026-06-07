@@ -33,10 +33,11 @@ export default function Products() {
               </div>
 
               <Link href={"/product/" + prod.slug}>
-                <p className="text-center w-full max-w-md px-3 py-4 text-[#526070] hover:text-white hover:underline break-words whitespace-normal">
+                <p className=" w-full max-w-md px-3 pt-3 text-[#526070] hover:text-white hover:underline break-words whitespace-normal">
                   {prod.name}
                 </p>
               </Link>
+              <p className="px-3 font-bold">${(prod.price / 100).toFixed(2)}</p>
             </li>
           );
         })}
