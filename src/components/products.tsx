@@ -18,7 +18,7 @@ export default function Products() {
         {products.map((prod) => {
           return (
             <li key={prod.id} className="flex flex-col">
-              <div className="overflow-hidden h-50 relative w-full">
+              <div className="overflow-hidden h-50 relative w-full rounded-sm">
                 {prod.image && (
                   <Link href={"/product/" + prod.slug}>
                     <Image

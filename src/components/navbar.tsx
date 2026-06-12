@@ -1,5 +1,5 @@
 "use client";
-import { CircleUser, Menu, Search, ShoppingCart } from "lucide-react";
+import { CircleUser, Menu, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/cart-context";
@@ -43,11 +43,6 @@ export default function Navbar() {
       {/* MOBILE BUTTON */}
       <div className="flex justify-between gap-4 px-3 font-extrabold">
         <ul className="flex items-center gap-4">
-          <li>
-            <button>
-              <Search />
-            </button>
-          </li>
           <li>
             <Link href={'/cart/'+cart?.id}>
             <div className="relative">
