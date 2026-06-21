@@ -7,7 +7,7 @@ Interface web para um ecommerce com autenticação de usuários.
 
 
 <a href="https://shop-xi-sage.vercel.app/" target="_blank" rel="noopener noreferrer">
-  🔗 Acessar o Shop
+  🔗 Acessar a Loja
 </a>
 
 ## Getting Started
