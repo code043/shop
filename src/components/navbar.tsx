@@ -6,7 +6,7 @@ import { useCart } from "../context/cart-context";
 
 export default function Navbar() {
   const { user, loading } = useAuth();
-  const { cart } = useCart()
+  const { cart } = useCart();
   return (
     <header className="w-full fixed bg-white flex justify-center text-red-500 z-50 shadow-sm">
       {/* MOBILE BUTTON */}
@@ -29,9 +29,6 @@ export default function Navbar() {
               <li className="hover:text-black hover:underline  text-[16px]">
                 <Link href="/products">PRODUCTS</Link>
               </li>
-              <li className="hover:text-black hover:underline text-[16px]">
-                <Link href="/brands">BRANDS</Link>
-              </li>
 
               <li className="hover:text-black hover:underline text-[16px]">
                 <Link href="/about">ABOUT</Link>
@@ -44,19 +41,19 @@ export default function Navbar() {
       <div className="flex justify-between gap-4 px-3 font-extrabold">
         <ul className="flex items-center gap-4">
           <li>
-            <Link href={'/cart/'+cart?.id}>
-            <div className="relative">
-              <ShoppingCart size={28} />
+            <Link href={"/cart/" + cart?.id}>
+              <div className="relative">
+                <ShoppingCart size={28} />
 
-              {cart && cart?.items?.length > 0 && (
-                <span
-                  className="absolute -top-1 -right-1 flex items-center justify-center 
+                {cart && cart?.items?.length > 0 && (
+                  <span
+                    className="absolute -top-1 -right-1 flex items-center justify-center 
                  min-w-[16px] h-4 px-1 text-[10px] font-bold 
                  bg-green-600 text-white rounded-full"
-                >
-                  {cart.items.length}
-                </span>
-              )}
+                  >
+                    {cart.items.length}
+                  </span>
+                )}
               </div>
             </Link>
           </li>
