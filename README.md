@@ -2,6 +2,8 @@
 
 Interface web para um ecommerce com autenticação de usuários.
 
+![Shop](./docs/preview.png)
+
 
 ## Live Demo
 
